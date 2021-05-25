@@ -7,6 +7,8 @@ from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
 from airflow.operators.python_operator import PythonOperator
 import calcul
+import init
+import insert
 
 
 default_args = {
@@ -29,3 +31,8 @@ dag = DAG("tutorial", default_args=default_args,
 
 # t1, t2 and t3 are examples of tasks created by instantiating operators
 t1 = PythonOperator(task_id="calcul", python_callable=calcul.calcul, dag=dag)
+t2 = PythonOperator(task_id="init", python_callable=init.init, dag=dag)
+t3 = PythonOperator(task_id="insert", python_callable=insert.insert, dag=dag)
+
+t2.set_upstream(t1)
+t3.set_upstream(t2)

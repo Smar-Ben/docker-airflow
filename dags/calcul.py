@@ -5,7 +5,7 @@ import numpy as np
 
 def read_csv():
     df = pd.read_csv(
-        'usr/local/airflow/dags/n201807.csv', decimal=',', sep=';', thousands='.',
+        '/usr/local/airflow/dags/n201807.csv', decimal=',', sep=';', thousands='.',
         low_memory=False, encoding='latin1'
     )
     df = df.rename(columns=str.lower)
@@ -33,8 +33,8 @@ def get_per_by_spe(df):
     return df
 
 
-# if __name__ == "__main__":
-def calcul():
+if __name__ == "__main__":
+#def calcul():
     df = read_csv()
     df_mean = get_mean_by_spe(df)
     df_per = get_per_by_spe(df)
@@ -47,4 +47,4 @@ def calcul():
 
     df_final = df_final.merge(df, how='inner', on='l_pre_spe')
     df = df.merge(df_new, how='inner', on='pre_spe')
-    df.to_csv('usr/local/airflow/dags/new_csv.csv')
+    df.to_csv('/usr/local/airflow/dags/new_csv.csv', index=False)
